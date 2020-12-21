@@ -115,10 +115,10 @@ var nv = 1
                                         style="background-color: rgb(27,51,170);color: rgb(255,255,255);">Tra cứu
                                     </button></a>  
                                     <?php if(isset(Auth::user()->email)){
-                                        echo " <a href='logout.php'><input type='button' value='Đăng Xuất'></a>";
+                                        echo " <a href='logout'><input type='button' value='Đăng Xuất'></a>";
                                     }
                                     else{
-                                        echo " <a href='login.php'><input type='button' value='Đăng nhập'></a>";
+                                        echo " <a href='login'><input type='button' value='Đăng nhập'></a>";
                                     }
                                     
                                     ?>

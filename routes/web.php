@@ -30,6 +30,17 @@ Route::post('input',[ HomeController::class ,'postForm' ])->name("post");
 Route::post('xuly',[ HomeController::class ,'xuly'])->name("xuly");
 Route::get('mail',[ HomeController::class ,'sendMail']);
 Route::get('tracuu', [HomeController::class,'traCuu']);
+Route::get('logout',function (){
+
+    if(Auth::check()){
+        Auth::logout();
+
+        return redirect('/home');
+    }
+    else {
+        return redirect('/home');
+    }
+});
 
 Route::get('/danhsach', function () {
     $data = Thisinh::all();

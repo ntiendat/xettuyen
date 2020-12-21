@@ -37,7 +37,21 @@
                                     type="text" placeholder="Tìm kiếm..">
                                 <div class="input-group-append"><button class="btn btn-light" type="button"
                                         style="background-color: rgb(27,51,170);color: rgb(255,255,255);">Tìm
-                                    </button><a href="http://localhost/web/controllers/login.php"><input type="button" value="Đăng nhập"></a>
+                                    </button><a href="
+                                    <?php if(isset(Auth::user()->email)){
+                                        echo "logout";
+                                    }
+                                    else{
+                                        echo " login";
+                                    }
+                             ?>
+                                    "><input type="button" value="<?php if(isset(Auth::user()->email)){
+                                        echo "Đăng xuất";
+                                    }
+                                    else{
+                                        echo "Đăng nhập";
+                                    }
+                                    ?>"></a>
                                 </div>
                             </div>
                             
