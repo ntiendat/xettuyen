@@ -1,5 +1,5 @@
 @extends('layouts.appp')
-@section('title','Đăng ký thành công')
+@section('title','Hồ Sơ')
 @section('content')
 <?php
 
@@ -16,24 +16,18 @@
             $D  =$data->van + $data->toan + $data->anh;?>
  
 
-<form action="{{route('xlsua')}}" method="post">
-    @csrf
-   
-
 <h2>Thông Tin Hồ Sơ</h2>
 
-    <input type="text" name="id" value="<?php echo $data->id?>" hidden>
   <div  style="padding-left : 150px; padding-right:150px;"class="info">
     <div class="row">
     <div class="col-md-8  ">
 
-      <h4 class="float-left"> <?php echo $data->ho_ten?> </h4>
-   
+    <h3 class="float-left"><?php echo $data->ho_ten?></h3>
+
     <table class="if">
         <tr>
           <th>Ngày Sinh :</th>
-          
-          <td><input type="text" style="border:0px;width:100%;" name="ngaysinh" value="<?php echo $data->ngay_sinh?>"></td>
+          <td><?php echo $data->ngay_sinh?></td>
         </tr>
         <tr>
           <th>Giới tính :</th>
@@ -45,19 +39,19 @@
         </tr>
         <tr>
           <th>SDT :</th>
-          <td><input type="text" style="border:0px;width:100%;" name="SDT" value="<?php echo $data->SDT?>"></td>
+          <td><?php echo $data->SDT?></td>
         </tr>
         <tr>
           <th>Email :</th>
-          <td><input type="text" style="border:0px;width:100%;" name="email" value="<?php echo $data->email?>"></td>
+          <td><?php echo $data->email?></td>
         </tr>
         <tr>
           <th>Địa chỉ thường trú :</th>
-          <td><input type="text" style="border:0px;width:100%;" name="diachithuongtru" value="<?php echo $data->dia_chi_thuong_tru?>"></td>
+          <td><?php echo $data->dia_chi_thuong_tru?></td>
         </tr>
         <tr>
           <th>Địa chỉ tạm trú :</th>
-          <td><input type="text" style="border:0px;width:100%;" name="diachitamtru" value="<?php echo $data->dia_chi_tam_tru?>"></td>
+          <td><?php echo $data->dia_chi_tam_tru?></td>
         </tr>
         <tr>
           <th>Khu vực :</th>
@@ -73,6 +67,7 @@
     <h5 class="float-left">Nguyện Vọng</h5>
     <table class="if-lop12">
       
+
 
         @if( $data->nguyen_vong_1 !='' ) 
         <tr>
@@ -197,15 +192,26 @@
 
     </div>
     <div class="col-md-4">
-        <img src="<?php echo "http://localhost/xettuyen/public/".$data->hinh_anh;?>" style="width:150px; margin-top:40px;" alt="">
-     </div>
-     <div class="col-md-6"></div>
-     <div class="col-md-2">
-     <input type="submit" class="btn btn-primary float-right" value="lưu">
-     <!-- <a href="sua.php?id=" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-right">lưu</a> -->
-     </div>
-    </div>
+    <img src="<?php echo "http://127.0.0.1:8000/".$data->hinh_anh;?>" style="width:150px; margin-top:40px;" alt=""></br>
     
+     </div>
+     <div class="col-md-5"><a style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-right" href="<?php echo "http://localhost/xettuyen/public/".$data->hoc_ba;?>">Xem Học Bạ</a></div>
+     <div class="col-md-3">
+    <ul>
+        <li><a href="/do/{{$data->id}}" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-left">Đỗ</a></li> 
+        <li><a href="/khongdo/{{$data->id}}" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-right">Không Đỗ</a></li>
+
+    </ul>
+     
+      
+    
+     
+    
+
+     </div>
+
+    </div>
+
   </div>
-  </form>
+
 @endsection

@@ -29,6 +29,6 @@ class TestMail extends Mailable
     public function build()
     {
                                                                       //gửi kèm file 
-        return $this->subject('Đây là tiêu đề')->view('TestMail') /*->attach('anhthe/abc.txt')*/;
+        return $this->subject('TRƯỜNG ĐẠI HỌC THUỶ LỢI')->view('TestMail') /*->attach('anhthe/abc.txt')*/;
     }
 }

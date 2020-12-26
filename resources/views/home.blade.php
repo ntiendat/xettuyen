@@ -73,14 +73,14 @@
             <div class="container">
                 <div class="menu flex">
                     <div class="block-heading" style="margin-top: -50px;">
-                        <h5 class="text-info cursor"><a href="controllers/xethocba.php"><img
+                        <h5 class="text-info cursor"><a href="/xethocba"><img
                                     src="http://www.tlu.edu.vn/portals/0/images/front/quality.jpg" alt=""></a></h5>
-                        <a href="controllers/xethocba.php">Xét tuyển học bạ</a>
+                        <a href="/xethocba">Xét tuyển học bạ</a>
                     </div>
                     <div class="block-heading" style="margin-top: -50px;">
                         <h5 class="text-info cursor"><a href="#"><img src="assets/img/scenery/tintuc.jpg" alt=""></a>
                         </h5>
-                        <a href="#">Tin Tức</a>
+                        <a href="#">Tin Tức </a>
                     </div>
                     <div class="block-heading" style="margin-top: -50px;">
                         <h5 class="text-info cursor"><a href="giangvien.php"><img src="assets/img/scenery/library.jpg" alt=""></a>
@@ -485,6 +485,37 @@
                 </div>
             </div>
         </div>
+        <div class="page__main">
+            <div class="block--background"> 
+              <div class="chatbot__overview">
+                {{-- <p i>X</p> --}}
+                <a id="X" href="">X</a>
+                <ul class="chatlist" id="pr">
+                  <li class="userInput">Hello</li>
+                  <li class="bot__output bot__output--standard"> Chào bạn !!!</li>
+                  <li class="bot__output bot__output--standard"> Chúng tôi có thể giúp gì bạn ?</li>
+
+                  @foreach ($chat as $item)
+                      @if ($item->user == 'user')
+                        <li class="userInput">{{$item->content}}</li>
+                        @else
+                      <li class="bot__output bot__output--standard">{{$item->content}}</li>
+                      @endif
+                  @endforeach
+                </ul>
+              </div>
+              <div class="chatbox-area">
+                <div  id="chatform">
+                    <textarea placeholder="Talk to me!" class="chatbox" name="chatbox" id='content' resize: "none" minlength="2"></textarea>
+                    <input class="submit-button" id='send'  type="submit" value="send">
+                </div>
+              </div>
+      
+                  {{-- <div class="block--background"></div> --}}
+        
+        </div>
+      </div>
+        <img id="bongbong" class="bongbong" src="https://www.flaticon.com/svg/static/icons/svg/2111/2111402.svg" alt="">
     </footer>
     {{-- <script src="assets/js/jquery.min.js"></script> --}}
     <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
@@ -493,8 +524,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
     {{-- <script src="assets/js/smoothproducts.min.js"></script> --}}
     <script src="{{ asset('assets/js/smoothproducts.min.js') }}"></script>
-    {{-- <script src="assets/js/theme.js"></script>    --}}
+    {{-- <script src="assets/js/theme.js"></script>  --}}
     <script src="{{ asset('assets/js/theme.js') }}"></script>
+    <script src="{{asset('assets/js/jsclient.js')}}"></script>
+
 
 
 </body>

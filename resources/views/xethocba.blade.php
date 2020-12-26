@@ -69,7 +69,7 @@
 
     <div class="col-md-4">
         
-    <select class="custom-select" name="thanhphothuongtru" id="thanhphothuongtru">
+    <select class="custom-select" name="thanhphothuongtru" id="tp">
         <option>---chọn Thành Phố---</option>
       <?php
                 // $sql = "SELECT * FROM devvn_tinhthanhpho";
@@ -95,7 +95,7 @@
     </div>
     <div class="col-md-4">
   
-                <select class="form-control" name="quanhuyenthuongtru" id="quanhuyenthuongtru">
+                <select class="form-control" name="quanhuyenthuongtru" id="qh">
                                 <option></option>
                                 <option></option>
                                 <option></option>
@@ -103,7 +103,7 @@
     </div> 
     <div class="col-md-4">
 
-                <select class="form-control" name="phuongxathuongtru" id="phuongxathuongtru">
+                <select class="form-control" name="phuongxathuongtru" id="px">
                                 <option></option>
                                 <option></option>
                                 <option></option>

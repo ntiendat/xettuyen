@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail; // Mail
 use App\Mail\TestMail;               // Mail
 use App\Models\Thisinh;
 use App\Models\Lichsu;
+use App\Models\User;
+
 use DB;
 use Carbon\Carbon; 
 
@@ -154,6 +156,14 @@ class HomeController extends Controller
                 $lichsu = new Lichsu();
                 $lichsu->tac_vu = 'Tạo Tài Khoản';
                 $lichsu->thoi_gian = Carbon::now('Asia/Ho_Chi_Minh');  
+                $lichsu->nguoi_thuc_hien =   $thisinh->ho_ten;
+                $lichsu -> save();
+                $user = new User();
+                $user->name = $thisinh->ho_ten ;
+                $user->email = $thisinh->email ;
+                $user->password = bcrypt($thisinh->CMND);
+                $user->role = 'NoUSER' ;
+                $user->save();              
                 
 
             return view('dangkythanhcong');
@@ -184,6 +194,11 @@ class HomeController extends Controller
             $thisinh->dia_chi_thuong_tru=$Request->diachithuongtru;
             $thisinh->dia_chi_tam_tru=$Request->diachitamtru;
             $thisinh->save();
+            $lichsu = new Lichsu();
+                $lichsu->tac_vu = 'Sửa Thông Tin Tài Khoản';
+                $lichsu->thoi_gian = Carbon::now('Asia/Ho_Chi_Minh');  
+                $lichsu->nguoi_thuc_hien = Auth::user()->name;
+                $lichsu -> save();
             $data = Thisinh::query()->find($Request->id);
             return view('hoso',compact('data'));
 

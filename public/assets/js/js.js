@@ -8,7 +8,7 @@ $(document).ready(
                                     
                                         $.ajax({
                                             //gửi dữ liệu đi
-                                            url : '/xettuyen/public/api/quanhuyen/' + iddiachi,
+                                            url : '/api/quanhuyen/' + iddiachi,
                                             type:'GET',
                                          
                                             //nhận dữ liệu về 
@@ -33,7 +33,7 @@ $(document).ready(
                                     
                                         $.ajax({
 
-                                            url : '/xettuyen/public/api/phuongxa/' + iddiachi,
+                                            url : '/api/phuongxa/' + iddiachi,
                                             type:'GET',
                                          
                                             //nhận dữ liệu về 
@@ -60,7 +60,7 @@ $(document).ready(
                                         $.ajax({
             
                                             //gửi dữ liệu đi
-                                            url : '/xettuyen/public/api/quanhuyen/' + iddiachi,
+                                            url : '/api/quanhuyen/' + iddiachi,
                                             type:'GET',
                                          
                                             //nhận dữ liệu về 
@@ -85,7 +85,7 @@ $(document).ready(
                                     
                                         $.ajax({
             
-                                            url : '/xettuyen/public/api/phuongxa/' + iddiachi,
+                                            url : '/api/phuongxa/' + iddiachi,
                                             type:'GET',
                                          
                                             //nhận dữ liệu về 

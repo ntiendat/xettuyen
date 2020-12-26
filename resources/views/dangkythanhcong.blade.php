@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.appp')
 @section('title','Đăng ký thành công')
 @section('content')
 <h2 style="padding-top: 29px;"  onclick=" return myFunction()"  >CHÚC MỪNG BẠN ĐÃNG KÝ THÀNH CÔNG</h2>

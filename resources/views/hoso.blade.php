@@ -192,12 +192,19 @@
 
     </div>
     <div class="col-md-4">
-    <img src="<?php echo "http://localhost/xettuyen/public/".$data->hinh_anh;?>" style="width:150px; margin-top:40px;" alt=""></br>
+    <img src="<?php echo "http://127.0.0.1:8000/".$data->hinh_anh;?>" style="width:150px; margin-top:40px;" alt=""></br>
     
      </div>
      <div class="col-md-6"><a style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-right" href="<?php echo "http://localhost/xettuyen/public/".$data->hoc_ba;?>">Xem Học Bạ</a></div>
      <div class="col-md-2">
-     <a href="http://localhost/xettuyen/public/sua/{{$data->id}}" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-right">Sửa</a>
+      @if (isset(Auth::user()->role)&& Auth::user()->role == "NoUSER")
+      <a href="/sua" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-right">Sửa</a>
+      @else
+      <a href="/sua/{{$data->id}}" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-right">Sửa</a>
+       @endif
+     
+    
+
      </div>
 
     </div>

@@ -49,6 +49,8 @@ class CreateThisinhTable extends Migration
             $table->float('su')->nullable();
             $table->float('dia_ly')->nullable();
             $table->float('GDCD')->nullable();
+            $table->float('trang_thai_kiem_duyet')->nullable();
+            $table->float('tinh_trang_duyet')->nullable();
             $table->string('hinh_anh');
             $table->string('hoc_ba');
         });

@@ -4,11 +4,15 @@
 <title>@yield('title')</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
 <meta name="keywords" content="Shoppy Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all">
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
 <!-- Custom Theme files -->
 <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css" media="all"/>
 <!--js-->
@@ -26,7 +30,42 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     {{-- <script>window.modernizr || document.write('<script src="lib/modernizr/modernizr-custom.js"><\/script>')</script> --}}
     <!--<script src="lib/html5shiv/html5shiv.js"></script>-->
      <!-- Chartinator  -->
-    <script src="js/chartinator.js" ></script>
+	<script src="js/chartinator.js" ></script>
+	<script>
+
+		// Enable pusher logging - don't include this in production
+		Pusher.logToConsole = true;
+		var pusher = new Pusher('10b13ca2e8f519647699', {
+		  cluster: 'ap1'
+		});
+		var channel = pusher.subscribe('my-channel');
+		channel.bind('my-event', function(data) {
+
+		  // let a=JSON.stringify(data);
+		  if(data.user=='user'){
+			
+		var x = document.getElementById("bongbong");
+        x.style.display = "none";
+        var y = document.getElementById("page__main");
+        y.style.display = "block";
+		   var p = document.createElement("li");  
+			p.classList.add(['bot__output']); 
+		   var node = document.createTextNode(data.message);
+		   var chatList = document.querySelector('.chatlist')
+		   p.appendChild(node);
+		   var div = document.getElementById("pr");
+		   div.appendChild(p);
+			chatList.scrollTop = chatList.scrollHeight;
+  
+		}
+		  // var element = document.getElementById(id);
+		  // element.scrollTop = element.scrollHeight - element.clientHeight;
+		  // console.log(data);
+		  // alert(data.message+ data.user);
+		});
+	   
+	  
+	  </script>
     <script type="text/javascript">
         jQuery(function ($) {
 
@@ -95,6 +134,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <!--skycons-icons-->
 <script src="js/skycons.js"></script>
+<link rel="stylesheet" href="{{asset('/assets/css/sua.css')}}">
+
 <!--//skycons-icons-->
 </head>
 <body>	
@@ -105,7 +146,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div class="header-main">
 					<div class="header-left">
 							<div class="logo-name">
-									 <a href="index.html"> <h1>Shoppy</h1> 
+									 <a href="index.html"> <h1></h1> 
 									<!--<img id="logo" src="" alt="Logo"/>--> 
 								  </a> 								
 							</div>
@@ -216,7 +257,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 													<div class="bar yellow" style="width:40%;"></div>
 												</div>
 											</a></li>
-											<li><a href="#">
+											<li><a href="/dashboard">
 												<div class="task-info">
 													<span class="task-desc">Dashboard done</span><span class="percentage">90%</span>
 												   <div class="clearfix"></div>	
@@ -263,7 +304,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<div class="user-name">
 
 													{{-- <p>{{ Auth::user()->name }}</p> --}}
-													<span>Administrator</span>
+													<span>{{Auth::user()->name }}</span>
 												</div>
 												<i class="fa fa-angle-down lnr"></i>
 												<i class="fa fa-angle-up lnr"></i>
@@ -273,7 +314,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<ul class="dropdown-menu drp-mnu">
 											<li> <a href="#"><i class="fa fa-cog"></i> Settings</a> </li> 
 											<li> <a href="{{ route('profile.show') }}"><i class="fa fa-user"></i> Profile</a> </li> 
-											<li> <a href="logout"><i class="fa fa-sign-out"></i> Logout</a> </li>
+											<li> <a href="{{asset('logout')}}"><i class="fa fa-sign-out"></i> Logout</a> </li>
 										</ul>
 									</li>
 								</ul>
@@ -415,7 +456,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--inner block end here-->
 <!--copy rights start here-->
 <div class="copyrights">
-	 <p>© 2016 Shoppy. All Rights Reserved | Design by  <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
+	 <p>© Copyright <a href="http://w3layouts.com/" target="_blank"></a> </p>
 </div>	
 <!--COPY rights end here-->
 </div>
@@ -427,53 +468,57 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			  </a> </div>		  
 		    <div class="menu">
 		      <ul id="menu" >
-		        <li id="menu-home" ><a href="index.html"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
-		        <li><a href="#"><i class="fa fa-cogs"></i><span>Components</span><span class="fa fa-angle-right" style="float: right"></span></a>
-		          <ul>
-		            <li><a href="grids.html">Grids</a></li>
-		            <li><a href="portlet.html">Portlets</a></li>		            
-		          </ul>
-		        </li>
-		        <li id="menu-comunicacao" ><a href="#"><i class="fa fa-book nav_icon"></i><span>Element</span><span class="fa fa-angle-right" style="float: right"></span></a>
-		          <ul id="menu-comunicacao-sub" >
-		            <li id="menu-mensagens" style="width: 120px" ><a href="buttons.html">Buttons</a>		              
-		            </li>
-		            <li id="menu-arquivos" ><a href="typography.html">Typography</a></li>
-		            <li id="menu-arquivos" ><a href="icons.html">Icons</a></li>
-		          </ul>
-		        </li>
-		          <li><a href="maps.html"><i class="fa fa-map-marker"></i><span>Maps</span></a></li>
-		        <li id="menu-academico" ><a href="#"><i class="fa fa-file-text"></i><span>Pages</span><span class="fa fa-angle-right" style="float: right"></span></a>
-		          <ul id="menu-academico-sub" >
-		          	 <li id="menu-academico-boletim" ><a href="login.html">Login</a></li>
-		            <li id="menu-academico-avaliacoes" ><a href="signup.html">Sign Up</a></li>		           
-		          </ul>
-		        </li>
+		        <li id="menu-home" ><a href="/dashboard"><i class="fa fa-tachometer"></i><span>Dashboard</span></a></li>
+		
+
+				  <li><a href="/duyet"><i class="fa fa-book nav_icon"></i><span>Duyệt</span></a></li>
+				  
+
+
+		    
 		        
-		        <li><a href="charts.html"><i class="fa fa-bar-chart"></i><span>Charts</span></a></li>
-		        <li><a href="#"><i class="fa fa-envelope"></i><span>Mailbox</span><span class="fa fa-angle-right" style="float: right"></span></a>
-		        	 <ul id="menu-academico-sub" >
-			            <li id="menu-academico-avaliacoes" ><a href="inbox.html">Inbox</a></li>
-			            <li id="menu-academico-boletim" ><a href="inbox-details.html">Compose email</a></li>
-		             </ul>
-		        </li>
-		         <li><a href="#"><i class="fa fa-cog"></i><span>System</span><span class="fa fa-angle-right" style="float: right"></span></a>
-		         	 <ul id="menu-academico-sub" >
-			            <li id="menu-academico-avaliacoes" ><a href="404.html">404</a></li>
-			            <li id="menu-academico-boletim" ><a href="blank.html">Blank</a></li>
-		             </ul>
-		         </li>
-		         <li><a href="#"><i class="fa fa-shopping-cart"></i><span>E-Commerce</span><span class="fa fa-angle-right" style="float: right"></span></a>
-		         	<ul id="menu-academico-sub" >
-			            <li id="menu-academico-avaliacoes" ><a href="product.html">Product</a></li>
-			            <li id="menu-academico-boletim" ><a href="price.html">Price</a></li>
-		             </ul>
-		         </li>
+		        <li><a href="/danhsachdo"><i class="fa fa-bar-chart"></i><span>Danh sách Đỗ</span></a></li>
+		      @if (Auth::user()->role == 'Root')
+			  <li><a href="/lichsu"><i class="fa fa-cog"></i><span>Lịch Sử</span><span class="fa fa-angle-right" style="float: right"></span></a>
+			  </li>
+			  @endif
+			  <li><a href="/regiterr"><i class="fa fa-plus nav_icon"></i><span>Thêm giảng viên</span></a></li>
+		   
 		      </ul>
 		    </div>
 	 </div>
 	<div class="clearfix"> </div>
 </div>
+<div id="page__main" class="page__main">
+	<div class="block--background"> 
+	  <div class="chatbot__overview">
+		{{-- <p i>X</p> --}}
+		<a id="X" href="">X</a>
+		<ul class="chatlist" id="pr">
+		  <li class="userInput">Hello</li>
+		  {{-- <li class="bot__output bot__output--standard">Hey, I'm NTD!</li>
+		  <li class="bot__output bot__output--standard">I will guide you through Mees' portfolio!</li> --}}
+		  @foreach ($chat as $item)
+                          @if ($item->user == 'admin')
+                            <li class="userInput">{{$item->content}}</li>
+                            @else
+                          <li class="bot__output bot__output--standard">{{$item->content}}</li>
+                          @endif
+                      @endforeach
+		</ul>
+	  </div>
+	  <div class="chatbox-area">
+		<div  id="chatform">
+			<textarea placeholder="Talk to me!" class="chatbox" name="chatbox" id='content' resize: "none" minlength="2"></textarea>
+			<input class="submit-button" id='send'  type="submit" value="send">
+		</div>
+	  </div>
+
+		  {{-- <div class="block--background"></div> --}}
+
+</div>
+</div>
+<img id="bongbong" class="bongbong" src="https://www.flaticon.com/svg/static/icons/svg/2111/2111402.svg" alt="">
 <!--slide bar menu end here-->
 <script>
 var toggle = true;
@@ -495,9 +540,16 @@ $(".sidebar-icon").click(function() {
             });
 </script>
 <!--scrolling js-->
+@if (isset(Auth::user()->role)&& Auth::user()->role == "AdUSER")
+<script src="{{asset('assets/js/jsserver.js')}}"></script>
+@else
+<script src="{{asset('assets/js/jsclient.js')}}"></script>
+ @endif
 		<script src="{{asset('js/jquery.nicescroll.js')}}"></script>
 		<script src="{{asset('js/scripts.js')}}"></script>
 		<!--//scrolling js-->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script src="{{asset('js/bootstrap.js')}}"> </script>
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
 <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>

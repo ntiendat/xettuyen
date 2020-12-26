@@ -19,16 +19,18 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-
+        // dd(Auth::check());
         // $reponse =$next($request);
-        if (   Auth::check() && Auth::user()->role != 'AdUSER') {
-        Log::channel('after')->info('hello');
+        // if ( !Auth::check() && ( !Auth::check() && Auth::user()->role != 'AdUSER')) {
+        if (( Auth::check() && Auth::user()->role == 'AdUSER')|| Auth::user()->role == 'Root') {
+
+                     return $next($request);
             
-            return redirect('home');
         }
             // $request->ip();
         // dd($request->ip());
         Log::channel('after')->info([$request->ip(),$request->header('User-Agent'),$request->header('cookie')]);
-        return $next($request);
+        Log::channel('after')->info('hello');
+        return redirect('home');
     }
 }
