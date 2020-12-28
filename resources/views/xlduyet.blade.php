@@ -42,6 +42,10 @@
           <td><?php echo $data->SDT?></td>
         </tr>
         <tr>
+          <th>SBD :</th>
+          <td id="SBD"><?php echo $data->SBD?></td>
+        </tr>
+        <tr>
           <th>Email :</th>
           <td><?php echo $data->email?></td>
         </tr>
@@ -122,41 +126,55 @@
     <hr class="hr">
     <h5 class="float-left">Thông tin học tập</h5>
     <table class="if-diem">
+      <tr>
+        <th>Môn</th>
+        <th>Điểm khai báo</th>
+        <th>Điểm từ Bộ GD & ĐT</th>
+      </tr>
         <tr>
           <th>Toán :</th>
           <td><?php echo $data->toan?></td>
+          <td id="toan"><?php echo $data->toan?></td>
         </tr>
         <tr>
           <th>Văn :</th>
           <td><?php echo $data->van?></td>
+          <td id="van"><?php echo $data->van?></td>
         </tr>
         <tr>
           <th>Anh :</th>
           <td><?php echo $data->anh?></td>
+          <td id="anh"><?php echo $data->anh?></td>
         </tr>
         <tr>
           <th>Vật Lý :</th>
           <td><?php echo $data->vat_ly?></td>
+          <td id="vat_ly"><?php echo $data->vat_ly?></td>
         </tr>
         <tr>
           <th>Hóa :</th>
           <td><?php echo $data->hoa?></td>
+          <td id="hoa"><?php echo $data->hoa?></td>
         </tr>
         <tr>
           <th>Sinh :</th>
           <td><?php echo $data->sinh?></td>
+          <td id="sinh"><?php echo $data->sinh?></td>
         </tr>
         <tr>
           <th>Sử :</th>
           <td><?php echo $data->su?></td>
+          <td id="su"><?php echo $data->su?></td>
         </tr>
         <tr>
           <th>Địa :</th>
           <td><?php echo $data->dia_ly?></td>
+          <td id="dia"><?php echo $data->dia_ly?></td>
         </tr>
         <tr>
           <th>GDCD :</th>
           <td><?php echo $data->GDCD?></td>
+          <td id="GDCD"><?php echo $data->GDCD?></td>
         </tr>
     </table>
 
@@ -213,5 +231,47 @@
     </div>
 
   </div>
+<script>
+   
+       
+      $(document).ready(function(){
+   
+        // var iddiachi = $(this).find(':selected').data("data");
+           let SBD = $("#SBD").text();     
+           console.log(SBD);                  
+        $.ajax({
+                                            //gửi dữ liệu đi
+           url : '/api/diem/' + '09001523',
+           type:'GET',
+                                         
+                                            //nhận dữ liệu về 
+           success:function(nhanve){
+             var obj = JSON.parse(nhanve);
+           
+             $("#toan").text(obj[0]);
+             $("#van").text(obj[1]);
+             $("#anh").text(obj[2]);
+             $("#vat_ly").text(obj[3]);
+             $("#hoa").text(obj[4]);
+             $("#sinh").text(obj[5]);
+             $("#su").text(obj[6]);
+             $("#dia").text(obj[7]);
+             $("#GDCD").text(obj[8]);
+           
+              // console.log(obj[2]);
+        
+               
+                }
+         }
+       );
+        }
+    
+  );
+
+
+
+ 
+  
+  </script>
 
 @endsection

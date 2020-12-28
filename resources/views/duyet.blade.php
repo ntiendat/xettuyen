@@ -19,6 +19,8 @@ use app\Helpes\functions;
           <th>Ngày Sinh</th>
           <th>Giới Tính</th>
           <th>CMND</th>
+          <th>SDT</th>
+          <th>SBD</th>
 
           <th>Email</th>
           <th>Trường</th>
@@ -45,6 +47,8 @@ use app\Helpes\functions;
             <td>{{$item->ngay_sinh}}</td>
             <td>{{$item->gioi_tinh}}</td>
             <td>{{$item->CMND}}</td>
+            <td>{{$item->SDT}}</td>
+            <td>{{$item->SBD}}</td>
             <td>{{$item->email}}</td>
             <td>{{$item->truong_lop_12}}</td>
             <td><?php if($item->nguyen_vong_1!=''){check2($item->doituong,$item->khuvuc,$item->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D);}?></td>
@@ -69,6 +73,31 @@ use app\Helpes\functions;
       });
     });
   });
+
+  $("#tp").change(
+     function(){
+        var iddiachi = $(this).find(':selected').data("data");
+                                    
+        $.ajax({
+                                            //gửi dữ liệu đi
+           url : '/api/quanhuyen/' + iddiachi,
+           type:'GET',
+                                         
+                                            //nhận dữ liệu về 
+           success:function(nhanve){
+           $("#qh").empty();
+            var str
+            var obj = JSON.parse(nhanve);
+             for (item of obj) {
+              str="<option value='"+item.name+"'   data-data2='"+item.maqh+"' > "+item.name+"</option>"
+             $("#qh").append(str);
+               }
+                }
+         }
+       );
+
+    }
+  );
   </script>
 </div>
   

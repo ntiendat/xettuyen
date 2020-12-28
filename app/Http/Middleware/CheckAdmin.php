@@ -22,7 +22,7 @@ class CheckAdmin
         // dd(Auth::check());
         // $reponse =$next($request);
         // if ( !Auth::check() && ( !Auth::check() && Auth::user()->role != 'AdUSER')) {
-        if (( Auth::check() && Auth::user()->role == 'AdUSER')|| Auth::user()->role == 'Root') {
+        if ( (Auth::check() && Auth::user()->role == 'AdUSER')|| Auth::user()->role == 'Root') {
 
                      return $next($request);
             

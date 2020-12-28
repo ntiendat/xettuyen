@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class TestMail extends Mailable implements ShouldQueue
+class ThongBao extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
     public $mess;
@@ -29,6 +29,6 @@ class TestMail extends Mailable implements ShouldQueue
     public function build()
     {
                                                                       //gửi kèm file 
-        return $this->subject('TRƯỜNG ĐẠI HỌC THUỶ LỢI')->view('TestMail') /*->attach('anhthe/abc.txt')*/;
+        return $this->subject('TRƯỜNG ĐẠI HỌC THUỶ LỢI')->view('thongbao') /*->attach('anhthe/abc.txt')*/;
     }
 }

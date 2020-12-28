@@ -5,13 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<style>
+	div.page__main {
+    position: none;
+   
+    width: 300px;
+    height: 423px;
 
+  }
+</style>
 <meta name="keywords" content="Shoppy Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <link href="{{asset('css/bootstrap.css')}}" rel="stylesheet" type="text/css" media="all">
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+<link rel="stylesheet" href="{{asset('/assets/css/sua2.css')}}">
 
 <!-- Custom Theme files -->
 <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css" media="all"/>
@@ -47,7 +56,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		var x = document.getElementById("bongbong");
         x.style.display = "none";
         var y = document.getElementById("page__main");
-        y.style.display = "block";
+		y.style.display = "block";
+		
+
+
+
+
 		   var p = document.createElement("li");  
 			p.classList.add(['bot__output']); 
 		   var node = document.createTextNode(data.message);
@@ -134,7 +148,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <!--skycons-icons-->
 <script src="js/skycons.js"></script>
-<link rel="stylesheet" href="{{asset('/assets/css/sua.css')}}">
+
 
 <!--//skycons-icons-->
 </head>
@@ -375,6 +389,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</a>
 			</div>
 			<div class="col-md-4 market-update-gd">
+				<a href="{{route('lienhe')}}">
+
 				<div class="market-update-block clr-block-3">
 					<div class="col-md-8 market-update-left">
 						<h3>Liên Hệ </h3>
@@ -386,6 +402,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 				  <div class="clearfix"> </div>
 				</div>
+				</a>
 			</div>
 		   <div class="clearfix"> </div>
         </div>
@@ -479,7 +496,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		        
 		        <li><a href="/danhsachdo"><i class="fa fa-bar-chart"></i><span>Danh sách Đỗ</span></a></li>
 		      @if (Auth::user()->role == 'Root')
-			  <li><a href="/lichsu"><i class="fa fa-cog"></i><span>Lịch Sử</span><span class="fa fa-angle-right" style="float: right"></span></a>
+			  <li><a href="/lichsu"><i class="fa fa-cog"></i><span>Lịch Sử</span></a>
 			  </li>
 			  @endif
 			  <li><a href="/regiterr"><i class="fa fa-plus nav_icon"></i><span>Thêm giảng viên</span></a></li>
@@ -540,7 +557,7 @@ $(".sidebar-icon").click(function() {
             });
 </script>
 <!--scrolling js-->
-@if (isset(Auth::user()->role)&& Auth::user()->role == "AdUSER")
+@if ((Auth::check() && Auth::user()->role == 'AdUSER')|| Auth::user()->role == 'Root')
 <script src="{{asset('assets/js/jsserver.js')}}"></script>
 @else
 <script src="{{asset('assets/js/jsclient.js')}}"></script>

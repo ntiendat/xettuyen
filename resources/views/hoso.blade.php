@@ -42,6 +42,10 @@
           <td><?php echo $data->SDT?></td>
         </tr>
         <tr>
+          <th>Số Báo Danh :</th>
+          <td><?php echo $data->SBD?></td>
+        </tr>
+        <tr>
           <th>Email :</th>
           <td><?php echo $data->email?></td>
         </tr>

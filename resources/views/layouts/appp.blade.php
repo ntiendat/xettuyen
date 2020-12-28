@@ -143,7 +143,7 @@ var nv = 1
                                
                                 <div class="input-group-append">
 
-                                    @if (isset(Auth::user()->role)&& Auth::user()->role != "AdUSER")
+                                    @if (isset(Auth::user()->role)&& Auth::user()->role != "AdUSER" && Auth::user()->role != "Root")
                                         <a href='/hoso' style='font-size: 30px;color:blue;'>
                                  <i style='color: darkslateblue;  margin-right: 15px;margin-top: 6px;' class='far fa-address-book'></i>
                                  </a>

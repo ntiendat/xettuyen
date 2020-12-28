@@ -24,3 +24,4 @@ Route::get('/quanhuyen/{id}',[HomeController::class,'layquanhuyen']);
 Route::get('/phuongxa/{id}',[HomeController::class,'layphuongxa']);
 Route::get('/nguyenvong',[HomeController::class,'nguyenvong']);
 Route::get('/tk/{mon}',[HomeController::class,'tk']);
+Route::get('/diem/{sbd}',[HomeController::class,'sbd']);

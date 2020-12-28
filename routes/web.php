@@ -10,6 +10,7 @@ use App\Events\pu;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Mail\TestMail;               // Mail
+use App\Mail\ThongBao;               // Mail
 use Illuminate\Support\Facades\Mail; // Mail
 
 // use DB;
@@ -246,3 +247,19 @@ Route::post('dangky', function (Request $Request) {
                 $user->save();              
                 return redirect('dashboard');
 })->name('dangky');
+
+Route::get('/lienhe', function () {
+    $ip = DB::table('chat')->distinct('ip')->select('ip')->get()->toArray();
+  
+    $data=array();
+   
+    foreach ($ip as $value) {
+        
+         $b = Chat::where('ip',$value->ip)->orwhere('ip','127.0.0.1')->get()->toArray();
+      
+            $data[$value->ip]=$b;
+      }
+    
+  
+    return view('lienhe',compact('data','ip'));
+ })->name('lienhe');

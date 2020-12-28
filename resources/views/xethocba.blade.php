@@ -59,6 +59,10 @@
                             <option value="DT7">Đối Tượng 7</option>
                     </select>
         </div>
+        <div class="col-md-4">
+            <input class="input-group input-by-me" type="text" placeholder="Số Báo Danh thi THPT" id="SBD"  name="SBD">
+        </div>
+        
      </div>
 
      <h3 class="text-bold">Địa chỉ thường trú</h3>

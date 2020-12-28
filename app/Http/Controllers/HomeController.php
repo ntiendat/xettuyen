@@ -42,6 +42,25 @@ class HomeController extends Controller
      json_encode($data);
         return json_encode($data);
     }
+
+    public function sbd($sbd){
+        $html = file_get_contents('https://thptquocgia.edu.vn/diemthi/?sbd='.$sbd);
+        // echo $html;
+        $bieu_thuc_chinh_qui='#(?<=role="table" class="table table-striped table-bordered table-hover responsive-table">).*(?=</table>)#imsu';
+        \preg_match($bieu_thuc_chinh_qui,$html,$kq);
+        $html2=trim($html,'/n');
+        $html2=trim($html,'/t');
+        \preg_match($bieu_thuc_chinh_qui,$html2,$kq);
+        if($kq==null){
+            return 'Không có kết quả ';
+        }
+        $bieu_thuc_chinh_qui2= '#<td>(.*)</td>#';
+        \preg_match_all( $bieu_thuc_chinh_qui2,$kq[0],$kq2);
+        if(isset($kq2[0])){
+            return json_encode($kq2[1]);
+        }
+            return 'Không có kết quả ';
+    }
     public function nguyenvong(){
         $data = DB::table('nguyenvong')->get();
         json_encode($data);
@@ -55,6 +74,7 @@ class HomeController extends Controller
         $thisinh->CMND=$Request->CMND;
         $thisinh->gioi_tinh=$Request->gioitinh;
         $thisinh->SDT=$Request->SDT;
+        $thisinh->SBD=$Request->SBD;
         $thisinh->email=$Request->email;
         $thisinh->khuvuc=$Request->khuvucuutien;
         $thisinh->doituong=$Request->doituonguutien;
@@ -189,6 +209,7 @@ class HomeController extends Controller
             // dd($Request->all());
             $thisinh = Thisinh::query()->find($Request->id);
             $thisinh->SDT=$Request->SDT;
+            $thisinh->SBD=$Request->SBD;
             $thisinh->ngay_sinh=$Request->ngaysinh;
             $thisinh->email=$Request->email;
             $thisinh->dia_chi_thuong_tru=$Request->diachithuongtru;

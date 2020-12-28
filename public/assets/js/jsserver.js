@@ -1,12 +1,45 @@
 $(document).ready(
+    $(".button").click(function(){
+         let ip = $(this).attr('name'); 
+         console.log(ip);
+        //   $(".page__main").show();
+
+
+          var x = document.getElementById("bongbong");
+        //   x.style.display = "none";
+          var y = document.getElementById('page__main '+ip);
+          y.style.display = "block";
+          
+
+    }),
+
+
+
+
+
+
+
     $(".page__main").hide(),
-    $('#bongbong').click(function(){
+    $('#bongbong').click(function(event){
+        event.preventDefault();  
         $(".page__main").show();
         $("#bongbong").hide()
     }),
-    $('#X').click(function(event){
+    // $('#X').click(function(event){
+    //     event.preventDefault();  
+    //     $(this).parent().parent().remove();
+    //     var x = document.getElementById("bongbong");
+    //     x.style.display = "block";
+    //     var y = document.getElementById("page__main");
+    //     y.style.display = "none";
+        
+    //     // $(".page__main").hide();
+    //     // $("#bongbong").show()
+    // }),
+    $('.X').click(function(event){
         event.preventDefault();  
-        $(".page__main").hide();
+        $(this).parent().parent().parent().hide();
+    //    $(".page__main").show();
         $("#bongbong").show()
     }),
     $('#send').click(function(){

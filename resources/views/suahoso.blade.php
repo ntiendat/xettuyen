@@ -48,6 +48,10 @@
           <td><input type="text" style="border:0px;width:100%;" name="SDT" value="<?php echo $data->SDT?>"></td>
         </tr>
         <tr>
+          <th>SBD :</th>
+          <td><input type="text" style="border:0px;width:100%;" name="SBD" value="<?php echo $data->SBD?>"></td>
+        </tr>
+        <tr>
           <th>Email :</th>
           <td><input type="text" style="border:0px;width:100%;" name="email" value="<?php echo $data->email?>"></td>
         </tr>
