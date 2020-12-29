@@ -28,270 +28,31 @@ use Carbon\Carbon;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
-Route::get('/home', function () {
-    return view('home');
-});
-Route::get('/xethocba', [ HomeController::class ,'dangKy']);
-
-
-
-
-// Route::get('/search', function () {
-//     return view('search');
-// });
+Route::get('/', function () {return view('home');});
+Route::get('/home', function () { return view('home');});
+Route::get('/xethocba', [ HomeController::class ,'xetHocBa']);
 Route::post('input',[ HomeController::class ,'postForm' ])->name("post");
 Route::post('xuly',[ HomeController::class ,'xuly'])->name("xuly");
 Route::get('mail',[ HomeController::class ,'sendMail']);
 Route::get('tracuu', [HomeController::class,'traCuu']);
-Route::get('logout',function (){
-    if(Auth::check()){
-        Auth::logout();
-        return redirect('/home');
-    }
-    else {
-        return redirect('/home');
-    }
-});
-
-Route::get('/danhsach', function () {
-    $data = Thisinh::all();
-   
-    return view('danhsachthisinh',compact('data'));
-})->name('danhsach')->middleware('admin'); 
-
-Route::get('echo', function () {
-    // $a = ahihi('Tiến Đạt');
-    check();
-    // echo $a;
-});
-
-Route::get('/a', function () {
-    $data = Thisinh::all();
-   
-    return view('danhsach',compact('data'));
-}) -> middleware('admin');
-Route::get('/thongke', function () {
-    // $data = Thisinh::all();
-   
-    return view('thongke');
-})->name('thongke')->middleware('admin');
-Route::get('hoso', function () {
-  
-    $id = App\Models\User::where('email',Auth::user()->email)->value('id');
-    $id = App\Models\User::find($id)->thiSinh->value('id');
-    $data = Thisinh::query()->find($id);
-    // dd($data);
-    return view('hoso',compact('data','id'));
-});
-
-Route::get('hoso/{id}', function ($id) {
-  
-    // $id = App\Models\User::where('email',Auth::user()->email)->value('id');
-    // $id = App\Models\User::find($id)->thiSinh->value('id');
-    $data = Thisinh::query()->find($id);
-
-    return view('hoso',compact('data','id'));
-})->middleware('admin');
-Route::get('sua/{id}', function ($id) {
-    $data = Thisinh::query()->find($id);
-    return view('suahoso',compact('data','id'));
-})->middleware('admin');
-Route::get('sua/', function () {
-    $id = App\Models\User::where('email',Auth::user()->email)->value('id');
-    $data = Thisinh::query()->find($id);
-    return view('suahoso',compact('data','id'));
-});
-
-
-
-
-
-
+Route::get('/logout',[HomeController::class,'logOut']);
+Route::get('/danhsach',[HomeController::class,'danhSach'])->name('danhsach')->middleware('admin'); 
+Route::get('/thongke',[HomeController::class,'thongKe'] )->name('thongke')->middleware('admin');
+Route::get('hoso',[HomeController::class,'hoSo']);
+Route::get('hoso/{id}', [HomeController::class,'xemHoSo'])->middleware('admin');
+Route::get('sua/{id}',[HomeController::class,'suaHoSo'])->middleware('admin');
+Route::get('sua/',[HomeController::class,'sua'] );
 Route::post('xlsua',[HomeController::class,'xlsua'])->name('xlsua');
-
-
-
-Route::middleware(['auth:sanctum', 'verified','admin'])->get('/dashboard', function () {
-    return view('admin');
-})->name('dashboard'); 
-Route::get('lichsu',function(){
-    $data = Lichsu::all();
-  return view('lichsu',compact('data'));
-})->middleware('admin');
-
-
- Route::get('/duyet', function () {
-    $data = Thisinh::where('trang_thai_kiem_duyet','Chưa duyệt')->get();
-    return view('duyet',compact('data'));
- });
-
- Route::get('duyet/{id}', function ($id) {
-  
-    // $id = App\Models\User::where('email',Auth::user()->email)->value('id');
-    // $id = App\Models\User::find($id)->thiSinh->value('id');
-    $data = Thisinh::query()->find($id);
-
-    return view('xlduyet',compact('data','id'));
-})->middleware('admin');
-
-Route::get('do/{id}', function ($id) {
-    $data = Thisinh::query()->find($id);
-    $data->trang_thai_kiem_duyet='Đã duyệt';
-   $data->tinh_trang_duyet='Đỗ';
-    $data->save();
-    $A  =$data->toan + $data->vat_ly + $data->hoa;
-    $A1 =$data->toan + $data->vat_ly + $data->anh;
-    $A2 =$data->toan + $data->vat_ly + $data->anh;
-    $B  =$data->toan + $data->hoa + $data->sinh;
-    $C  =$data->van + $data->su + $data->dia_ly;
-    $D  =$data->van + $data->toan + $data->anh;
-    $mess = [
-        'title'=>'TRƯỜNG ĐẠI HỌC THUỶ LỢI ',
-        'body'=>'KẾT QUẢ XÉT TUYỂN ĐẠI HỌC',
-        'nguyenvong1'=>check($data->doituong,$data->khuvuc,$data->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D),
-        'nguyenvong2'=>'',
-        'nguyenvong3'=>'',
-        'trangthai'=>'Đỗ',
-
-    ];
-   
-    if($data->nguyen_vong_2 != null){
-        $mess['nguyenvong2'] = check($data->doituong,$data->khuvuc,$data->nguyen_vong_2,$A,$A1,$A2,$B,$C,$D);
-    }
-    if($data->nguyen_vong_3 !=null){
-        $mess['nguyenvong2'] = check($data->doituong,$data->khuvuc,$data->nguyen_vong_3,$A,$A1,$A2,$B,$C,$D);
-    }
-    // array_push($mess,'nguyenvong1'=>check($data->doituong,$data->khuvuc,$data->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D));
-
-
-    Mail::to($data->email)->send(new TestMail ($mess));
-    $lichsu = new Lichsu();
-    $lichsu->tac_vu = 'Duyệt thí sinh '.$data->ho_ten.' đỗ ';
-    $lichsu->thoi_gian = Carbon::now('Asia/Ho_Chi_Minh');  
-    $lichsu->nguoi_thuc_hien =   $data->ho_ten;
-    $lichsu -> save();
-    return redirect('duyet');
-});
-Route::get('khongdo/{id}', function ($id) {
-    $data = Thisinh::query()->find($id);
-    $data->trang_thai_kiem_duyet='Đã duyệt';
-    $data->tinh_trang_duyet='Không đỗ';
-    $data->save();
-    $A  =$data->toan + $data->vat_ly + $data->hoa;
-    $A1 =$data->toan + $data->vat_ly + $data->anh;
-    $A2 =$data->toan + $data->vat_ly + $data->anh;
-    $B  =$data->toan + $data->hoa + $data->sinh;
-    $C  =$data->van + $data->su + $data->dia_ly;
-    $D  =$data->van + $data->toan + $data->anh;
-   
-    $mess = [
-        'title'=>'TRƯỜNG ĐẠI HỌC THUỶ LỢI ',
-        'body'=>'KẾT QUẢ XÉT TUYỂN ĐẠI HỌC',
-        'nguyenvong1'=>check($data->doituong,$data->khuvuc,$data->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D),
-        'nguyenvong2'=>'',
-        'nguyenvong3'=>'',
-        'trangthai'=>'Không đỗ',
-    ];
-
-    if($data->nguyen_vong_2 != null){
-        $mess['nguyenvong2'] = check($data->doituong,$data->khuvuc,$data->nguyen_vong_2,$A,$A1,$A2,$B,$C,$D);
-    }
-    if($data->nguyen_vong_3 !=null){
-        $mess['nguyenvong2'] = check($data->doituong,$data->khuvuc,$data->nguyen_vong_3,$A,$A1,$A2,$B,$C,$D);
-    }
-    // array_push($mess,'nguyenvong1'=>check($data->doituong,$data->khuvuc,$data->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D));
-
-
-    // array_p u sh( $mess,'nguyenvong1'=>check($data->doituong,$data->khuvuc,$data->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D));
-    
-    // dd($mess);
-    
-    Mail::to($data->email)->send(new TestMail ($mess));
-
-    $lichsu = new Lichsu();
-    $lichsu->tac_vu = 'Duyệt thí sinh '.$data->ho_ten.' không đỗ ';
-    $lichsu->thoi_gian = Carbon::now('Asia/Ho_Chi_Minh');  
-    $lichsu->nguoi_thuc_hien =   $data->ho_ten;
-    $lichsu -> save();
-    return redirect('duyet');
-});
-
-Route::get('regiterr', function () {
-
-    return view('dangky');
-})->middleware('admin');
-    
-Route::get('/danhsachdo', function () {
-    $data = Thisinh::where('tinh_trang_duyet','Đỗ')->get();
-    return view('danhsachdo',compact('data'));
- });
-Route::post('dangky', function (Request $Request) {
-                $user = new User();
-                $user->name = $Request->ho_ten ;
-                $user->email = $Request->email ;
-                $user->password = bcrypt($Request->pass);
-                $user->role = 'AdUSER' ;
-                $user->save();              
-                return redirect('dashboard');
-})->name('dangky');
-
-Route::get('/lienhe', function () {
-    $ip = DB::table('chat')->distinct('ip')->select('ip')->get()->toArray();
-  
-    $data=array();
-   
-    foreach ($ip as $value) {
-        
-         $b = Chat::where('ip',$value->ip)->orwhere('ip','127.0.0.1')->get()->toArray();
-      
-            $data[$value->ip]=$b;
-      }
-    
-  
-    return view('lienhe',compact('data','ip'));
- })->name('lienhe');
-
-
- Route::post('/send',function(Request $Request){
-    event(new pu( $Request->user,$Request->content));
-    $chat = new Chat();
-    $chat->user = $Request->user;
-    $chat->time = Carbon::now('Asia/Ho_Chi_Minh');  
-    $chat->content =   $Request->content;
-    $chat->ip = $Request->ip();
-    $chat -> save();
-    return $Request->user;
- });
-
-  
- Route::post('/sendcl',function(Request $Request){
-     $event= new pu( $Request->user,$Request->content,$Request->ip);
-    event($event);
-    $chat = new Chat();
-    $chat->user = $Request->user;
-    $chat->time = Carbon::now('Asia/Ho_Chi_Minh');  
-    $chat->content =   $Request->content;
-    $chat->ip = $Request->ip;
-    $chat->to_ip = $Request->ip();
-    // dd($chat);
-    $chat->save();
-    return $Request->ip;
- });
-
- Route::post('/sendsv',function(Request $Request){
-    $event= new pu( $Request->user,$Request->content,$Request->ip);
-   event($event);
-   $chat = new Chat();
-   $chat->user = $Request->user;
-   $chat->time = Carbon::now('Asia/Ho_Chi_Minh');  
-   $chat->content =   $Request->content;
-   $chat->to_ip = $Request->ip;
-   $chat->ip = $Request->ip();
-   // dd($chat);
-   $chat->save();
-   return $Request->ip;
-});
+Route::middleware(['auth:sanctum', 'verified','admin'])->get('/dashboard', function () {return view('admin');})->name('dashboard'); 
+Route::get('lichsu',[HomeController::class,'lichSu'])->middleware('admin');
+Route::get('/duyet',[HomeController::class,'duyet'])->middleware('admin');
+Route::get('duyet/{id}', [HomeController::class,'duyetHoSo'])->middleware('admin');
+Route::get('do/{id}', [HomeController::class,'do'])->middleware('admin');    
+Route::get('khongdo/{id}',[HomeController::class,'khongDo'] )->middleware('admin');
+Route::get('regiterr', function () {return view('dangky');})->middleware('admin');
+Route::get('/danhsachdo', [HomeController::class,'danhSachDo'])->middleware('admin');
+Route::post('dangky', [HomeController::class,'dangKy'] )->name('dangky')->middleware('admin');
+Route::get('/lienhe',[HomeController::class,'lienHe'] )->name('lienhe')->middleware('admin');
+Route::post('/sendcl',[HomeController::class,'sendClient']);
+Route::post('/sendsv',[HomeController::class,'sendSever']);
 

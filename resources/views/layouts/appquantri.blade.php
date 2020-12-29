@@ -577,7 +577,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 		
 	@else
-	<img id="bongbong" class="bongbong" src="https://www.flaticon.com/svg/static/icons/svg/2111/2111402.svg" alt="">
+	{{-- <img id="bongbong" class="bongbong" src="https://www.flaticon.com/svg/static/icons/svg/2111/2111402.svg" alt=""> --}}
 
 	@endif
 

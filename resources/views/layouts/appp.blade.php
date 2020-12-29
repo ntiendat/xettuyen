@@ -63,7 +63,7 @@
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function(data) {
       // let a=JSON.stringify(data);
-      alert(data.ip);
+    //   alert(data.ip);
       if(data.ip== subDes){
       if(data.user=='admin'){
         // $(".page__main").show();
@@ -182,13 +182,13 @@ var nv = 1
                                  <a href="{{asset('tracuu')}}"><button class="btn btn-light" type="button"
                                         style="background-color: rgb(27,51,170);color: rgb(255,255,255);">Tra cứu
                                     </button></a>  
-                                    <?php if(isset(Auth::user()->email)){
-                                        echo " <a href='logout'><input type='button' value='Đăng Xuất'></a>";
-                                    }
-                                    else{
-                                        echo " <a href='login'><input type='button' value='Đăng nhập'></a>";
-                                    }
-                                    ?>
+                                
+
+                                    @if (isset(Auth::user()->email))
+                                    <a href='{{asset('logout')}}'><input type='button' value='Đăng Xuất'></a>
+                                    @else
+                                    <a href='{{asset('login')}}'><input type='button' value='Đăng nhập'></a>
+                                    @endif
                                 </div>
                             </div>
                             

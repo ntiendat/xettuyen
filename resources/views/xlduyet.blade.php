@@ -216,8 +216,9 @@
      <div class="col-md-5"><a style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-right" href="<?php echo "http://localhost/xettuyen/public/".$data->hoc_ba;?>">Xem Học Bạ</a></div>
      <div class="col-md-3">
     <ul>
-        <li><a href="/do/{{$data->id}}" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-left">Đỗ</a></li> 
-        <li><a href="/khongdo/{{$data->id}}" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-right">Không Đỗ</a></li>
+        {{-- <li><a href="/do/{{$data->id}}" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-left">Đỗ</a></li>  --}}
+        <li><a href="{{asset('do/'.$data->id)}}" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-left">Đỗ</a></li> 
+        <li><a href="{{asset('khongdo/'.$data->id)}}" style="margin-top:20px;margin-bottom:10px;" class="btn btn-primary float-right">Không Đỗ</a></li>
 
     </ul>
      

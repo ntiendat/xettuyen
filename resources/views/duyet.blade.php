@@ -54,7 +54,7 @@ use app\Helpes\functions;
             <td><?php if($item->nguyen_vong_1!=''){check2($item->doituong,$item->khuvuc,$item->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D);}?></td>
             <td><?php if($item->nguyen_vong_2!=''){check2($item->doituong,$item->khuvuc,$item->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D);}?></td>
             <td><?php if($item->nguyen_vong_3!=''){check2($item->doituong,$item->khuvuc,$item->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D);}?></td>
-            <td><a href="duyet/{{$item->id}}">Duyệt</a></td>
+            <td><a href="{{asset('duyet/'.$item->id)}}">Duyệt</a></td>
             </tr>
         @endforeach
         

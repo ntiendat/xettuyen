@@ -6,9 +6,13 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail; // Mail
 use App\Mail\TestMail;               // Mail
+use App\Mail\ThongBao;               // Mail
 use App\Models\Thisinh;
 use App\Models\Lichsu;
 use App\Models\User;
+use App\Models\Chat;
+use App\Events\pu;
+
 
 use DB;
 use Carbon\Carbon; 
@@ -26,7 +30,7 @@ class HomeController extends Controller
         }
     }
 
-    public function dangKy(){
+    public function xetHocBa(){
         $data = DB::table('devvn_tinhthanhpho')->get();
         $data1=$data;
         $data2= DB::table('nguyenvong')->get();
@@ -189,7 +193,8 @@ class HomeController extends Controller
             return view('dangkythanhcong');
 
 
-        }
+        
+    }
         // function sendMail(){
         //     $mess = [
         //         'title'=>'Test mail',
@@ -221,9 +226,14 @@ class HomeController extends Controller
                 $lichsu->nguoi_thuc_hien = Auth::user()->name;
                 $lichsu -> save();
             $data = Thisinh::query()->find($Request->id);
-            return view('hoso',compact('data'));
+            // return view('hoso',compact('data'));
 
-
+            if(Auth::user()->role=='AdUSER'||Auth::user()->role=='Root'){
+                return  \redirect('hoso/'.$thisinh->id);
+            }
+            else{
+                return  \redirect('hoso');
+            }
         }
         public function tk($mon){
             
@@ -244,10 +254,183 @@ class HomeController extends Controller
 
             return view('bieudo',compact('bd'));
         }
+        public function danhSach(){
+            $data = Thisinh::all();
+            return view('danhsachthisinh',compact('data'));
+        }
+        public function logOut(){
+            if(Auth::check()){
+                Auth::logout();
+                return redirect('/');
+            }
+            else {
+                return redirect('/');
+            }
+        }
+        public function thongKe() {
+            // $data = Thisinh::all();
+           
+            return view('thongke');
+        }
+        public  function hoSo() {
+            $id = User::where('email',Auth::user()->email)->value('id');
+            $id = User::find($id)->thiSinh->value('id');
+            $data = Thisinh::query()->find($id);
+            // dd($data);
+            return view('hoso',compact('data','id'));
+        }
+        public function xemHoSo($id) {
+            // $id = App\Models\User::where('email',Auth::user()->email)->value('id');
+            // $id = App\Models\User::find($id)->thiSinh->value('id');
+            $data = Thisinh::query()->find($id);
+            return view('hoso',compact('data','id'));
+        }
+        public function sua() {
+            $id = User::where('email',Auth::user()->email)->value('id');
+            $data = Thisinh::query()->find($id);
+            return view('suahoso',compact('data','id'));
+            // return redirect('/');
+
+        }
+        public  function suaHoSo ($id) {
+            
+            $data = Thisinh::query()->find($id);
+            return view('suahoso',compact('data','id'));
+        }
+        public function lichSu(){
+            $data = Lichsu::all();
+          return view('lichsu',compact('data'));
+        }
+        public  function duyet() {
+            $data = Thisinh::where('trang_thai_kiem_duyet','Chưa duyệt')->get();
+            return view('duyet',compact('data'));
+         }
+        public function duyetHoSo($id) {
+            // $id = App\Models\User::where('email',Auth::user()->email)->value('id');
+            // $id = App\Models\User::find($id)->thiSinh->value('id');
+            $data = Thisinh::query()->find($id);
+            return view('xlduyet',compact('data','id'));
+        }
+        public function do ($id) {
+            $data = Thisinh::query()->find($id);
+            $data->trang_thai_kiem_duyet='Đã duyệt';
+           $data->tinh_trang_duyet='Đỗ';
+            $data->save();
+            $A  =$data->toan + $data->vat_ly + $data->hoa;
+            $A1 =$data->toan + $data->vat_ly + $data->anh;
+            $A2 =$data->toan + $data->vat_ly + $data->anh;
+            $B  =$data->toan + $data->hoa + $data->sinh;
+            $C  =$data->van + $data->su + $data->dia_ly;
+            $D  =$data->van + $data->toan + $data->anh;
+            $mess = [
+                'title'=>'TRƯỜNG ĐẠI HỌC THUỶ LỢI ',
+                'body'=>'KẾT QUẢ XÉT TUYỂN ĐẠI HỌC',
+                'nguyenvong1'=>check($data->doituong,$data->khuvuc,$data->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D),
+                'nguyenvong2'=>'',
+                'nguyenvong3'=>'',
+                'trangthai'=>'Đỗ',
+            ];
+            if($data->nguyen_vong_2 != null){
+                $mess['nguyenvong2'] = check($data->doituong,$data->khuvuc,$data->nguyen_vong_2,$A,$A1,$A2,$B,$C,$D);
+            }
+            if($data->nguyen_vong_3 !=null){
+                $mess['nguyenvong2'] = check($data->doituong,$data->khuvuc,$data->nguyen_vong_3,$A,$A1,$A2,$B,$C,$D);
+            }
+            Mail::to($data->email)->send(new TestMail ($mess));
+            $lichsu = new Lichsu();
+            $lichsu->tac_vu = 'Duyệt thí sinh '.$data->ho_ten.' đỗ ';
+            $lichsu->thoi_gian = Carbon::now('Asia/Ho_Chi_Minh');  
+            $lichsu->nguoi_thuc_hien =   $data->ho_ten;
+            $lichsu -> save();
+            return redirect('duyet');
+        }
+        public function khongDo ($id) {
+            $data = Thisinh::query()->find($id);
+            $data->trang_thai_kiem_duyet='Đã duyệt';
+            $data->tinh_trang_duyet='Không đỗ';
+            $data->save();
+            $A  =$data->toan + $data->vat_ly + $data->hoa;
+            $A1 =$data->toan + $data->vat_ly + $data->anh;
+            $A2 =$data->toan + $data->vat_ly + $data->anh;
+            $B  =$data->toan + $data->hoa + $data->sinh;
+            $C  =$data->van + $data->su + $data->dia_ly;
+            $D  =$data->van + $data->toan + $data->anh;
+            $mess = [
+                'title'=>'TRƯỜNG ĐẠI HỌC THUỶ LỢI ',
+                'body'=>'KẾT QUẢ XÉT TUYỂN ĐẠI HỌC',
+                'nguyenvong1'=>check($data->doituong,$data->khuvuc,$data->nguyen_vong_1,$A,$A1,$A2,$B,$C,$D),
+                'nguyenvong2'=>'',
+                'nguyenvong3'=>'',
+                'trangthai'=>'Không đỗ',
+            ];
+            if($data->nguyen_vong_2 != null){
+                $mess['nguyenvong2'] = check($data->doituong,$data->khuvuc,$data->nguyen_vong_2,$A,$A1,$A2,$B,$C,$D);
+            }
+            if($data->nguyen_vong_3 !=null){
+                $mess['nguyenvong2'] = check($data->doituong,$data->khuvuc,$data->nguyen_vong_3,$A,$A1,$A2,$B,$C,$D);
+            }
+            Mail::to($data->email)->send(new TestMail ($mess));
+            $lichsu = new Lichsu();
+            $lichsu->tac_vu = 'Duyệt thí sinh '.$data->ho_ten.' không đỗ ';
+            $lichsu->thoi_gian = Carbon::now('Asia/Ho_Chi_Minh');  
+            $lichsu->nguoi_thuc_hien =   $data->ho_ten;
+            $lichsu -> save();
+            return redirect('duyet');
+        }
+        public function danhSachDo () {
+            $data = Thisinh::where('tinh_trang_duyet','Đỗ')->get();
+            return view('danhsachdo',compact('data'));
+         }
+         public function dangKy (Request $Request) {
+            $user = new User();
+            $user->name = $Request->ho_ten ;
+            $user->email = $Request->email ;
+            $user->password = bcrypt($Request->pass);
+            $user->role = 'AdUSER' ;
+            $user->save();              
+            return redirect('dashboard');
+            }
+        public  function lienHe () {
+            $ip = DB::table('chat')->distinct('ip')->select('ip')->get()->toArray();
+            $data=array();
+            foreach ($ip as $value) {
+                 $b = Chat::where('ip',$value->ip)->orwhere('ip','127.0.0.1')->get()->toArray();
+                    $data[$value->ip]=$b;
+              }
+            return view('lienhe',compact('data','ip'));
+         }
+
+         public function sendClient (Request $Request){
+            $event= new pu( $Request->user,$Request->content,$Request->ip);
+           event($event);
+           $chat = new Chat();
+           $chat->user = $Request->user;
+           $chat->time = Carbon::now('Asia/Ho_Chi_Minh');  
+           $chat->content =   $Request->content;
+           $chat->ip = $Request->ip;
+           $chat->to_ip = $Request->ip();
+           // dd($chat);
+           $chat->save();
+           return $Request->ip;
+        }
+        public function sendSever(Request $Request){
+            $event= new pu( $Request->user,$Request->content,$Request->ip);
+           event($event);
+           $chat = new Chat();
+           $chat->user = $Request->user;
+           $chat->time = Carbon::now('Asia/Ho_Chi_Minh');  
+           $chat->content =   $Request->content;
+           $chat->to_ip = $Request->ip;
+           $chat->ip = $Request->ip();
+           // dd($chat);
+           $chat->save();
+           return $Request->ip;
+        }
 
 
 
-    }
+}
+
 
 
 
