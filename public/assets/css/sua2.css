@@ -665,7 +665,7 @@ table.if th{
   bottom: 40px;
   right: 40px;
   width: 300px;
-  height: 490px;
+  height: 424px;
 }
 .lienhe table tbody tr td {
   padding: 0;
@@ -686,3 +686,11 @@ table.if th{
   width: max-content;
   height: max-content;
 }
+#page__main#only {
+	position: fixed;
+	bottom: 60px;
+	left: 60px;
+    width: 300px;
+    height: 423px;
+
+  }

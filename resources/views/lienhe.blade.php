@@ -11,11 +11,11 @@ use app\Helpes\functions;
 <div class="block_chat">
     @foreach ($data as $key => $item)
     <div id="page__main <?php echo $key;?>" class="page__main">
-        <div class="block--background"> 
+        <div class="block--background" id="<?php echo $key;?>"> 
           <div class="chatbot__overview">
             {{-- <p i>X</p> --}}
             <a class="X" href="">X</a>
-            <ul class="chatlist" id="pr">
+            <ul class="chatlist" id="pr <?php echo $key;?>">
               <li class="userInput">Hello</li>
               {{-- <li class="bot__output bot__output--standard">Hey, I'm NTD!</li>
               <li class="bot__output bot__output--standard">I will guide you through Mees' portfolio!</li> --}}
@@ -31,7 +31,7 @@ use app\Helpes\functions;
           <div class="chatbox-area">
             <div  id="chatform">
                 <textarea placeholder="Talk to me!" class="chatbox" name="chatbox" id='content' resize: "none" minlength="2"></textarea>
-                <input class="submit-button" id='send'  type="submit" value="send">
+                <input class="submit-button send" id='send'  type="submit" value="send">
             </div>
           </div>
               {{-- <div class="block--background"></div> --}}
@@ -39,7 +39,7 @@ use app\Helpes\functions;
     </div>
 @endforeach
 </div>
-------------------------------------
+
 
 
 <div class="lienhe">

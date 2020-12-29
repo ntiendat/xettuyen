@@ -11,21 +11,29 @@
         <div class="header-child style-1"  ><div class="stt"><span class="ng-tns-c19-1">1</span></div><div class="content-header"><h2 class="header-title-child" >THÔNG TIN THÍ SINH</h2></div></div>
      <div class="row">
         <div class="col-md-4">
+            <label class="float-left">Họ : </label>
             <input class="input-group input-by-me" type="text" placeholder="Họ"  id ="ho"  name="ho">
             
         </div>
         <div class="col-md-4">
+            <label class="float-left">Tên : </label>
+
             <input class="input-group input-by-me" type="text" placeholder="Tên"  id="ten" name="ten">
         </div>
         <div class="col-md-4">
+            <label class="float-left">Ngày Sinh : </label>
+
                     <input  class="input-group input-by-me" data-date-format="dd-mm-yyyy" type="date" id="start" name="ngaysinh"
                 value="22-09-1999"
                 min="01-01-1990" max="01-01-1990">
         </div>
         <div class="col-md-4">
+            <label class="float-left">CMND : </label>
+
         <input class="input-group input-by-me" type="text" placeholder="CMND" id="CMND" name="CMND">
         </div>
         <div class="col-md-4">
+            <label class="float-left">Giới tính : </label>
                         
                      <select class="input-group input-by-me" name="gioitinh">
                             <option value="Nam">Nam</option>
@@ -34,12 +42,18 @@
                     </select>
         </div>
         <div class="col-md-4">
+            <label class="float-left">SĐT : </label>
+
         <input class="input-group input-by-me" type="text" placeholder="SĐT"  id="SDT"  name="SDT">
         </div>
         <div class="col-md-4">
+            <label class="float-left">Email : </label>
+            
         <input class="input-group input-by-me" type="text" placeholder="Email" id="email"  name="email">
         </div>
         <div class="col-md-4">
+            <label class="float-left">Khu vực ưu tiên : </label>
+
                      <select class="input-group input-by-me" name="khuvucuutien" >
                             <option value="KV1">Khu Vực 1</option>
                             <option value="KV2">Khu Vực 2</option>
@@ -48,6 +62,8 @@
                     </select>
         </div>
         <div class="col-md-4">
+            <label class="float-left">Đối tượng ưu tiên : </label>
+
                       <select class="input-group input-by-me" name="doituonguutien" >
                             <option value="DT0">NONE</option>
                             <option value="DT1">Đối Tượng 1</option>
@@ -59,7 +75,9 @@
                             <option value="DT7">Đối Tượng 7</option>
                     </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-12">
+            <label class="float-left">Số báo danh thi tốt nghiệp : </label>
+
             <input class="input-group input-by-me" type="text" placeholder="Số Báo Danh thi THPT" id="SBD"  name="SBD">
         </div>
         
@@ -72,6 +90,7 @@
 
 
     <div class="col-md-4">
+        <label class="float-left">Thành phố thường trú : </label>
         
     <select class="custom-select" name="thanhphothuongtru" id="tp">
         <option>---chọn Thành Phố---</option>
@@ -98,6 +117,7 @@
 
     </div>
     <div class="col-md-4">
+        <label class="float-left">Quận huyện thường trú : </label>
   
                 <select class="form-control" name="quanhuyenthuongtru" id="qh">
                                 <option></option>
@@ -106,6 +126,7 @@
           </select>
     </div> 
     <div class="col-md-4">
+        <label class="float-left"> Thành phố thường trú : </label>
 
                 <select class="form-control" name="phuongxathuongtru" id="px">
                                 <option></option>
@@ -124,6 +145,8 @@
 
 
     <div class="col-md-12">
+        <label class="float-left">Địa chỉ thường trú : </label>
+
         <input class="input-group input-by-me" type="text" placeholder="Địa chỉ thường trú " id ="diachithuongtru" name="diachithuongtru">
         </div>
     </div>
@@ -135,6 +158,7 @@
 
 
     <div class="col-md-4">
+        <label class="float-left">Thành phố tạm trú : </label>
         
     <select class="custom-select" name="thanhphotamtru" id="tp2">
         @foreach ($data1 as $data1)
@@ -160,14 +184,15 @@
 
     </div>
     <div class="col-md-4">
+        <label class="float-left">Quận huyện tạm trú : </label>
   
                 <select class="form-control" name="quanhuyentamtru" id="qh2">
                                 <option></option>
-                                <option></option>
-                                <option></option>
+                               
           </select>
     </div> 
     <div class="col-md-4">
+        <label class="float-left">Phường xá tạm trú : </label>
 
                 <select class="form-control" name="phuongxatamtru" id="px2">
                                 <option></option>
@@ -181,21 +206,33 @@
 
 
     <div class="col-md-12">
+        <label class="float-left">Địa chỉ tạm trú : </label>
+
         <input class="input-group input-by-me" type="text" placeholder="Địa chỉ  trú tạm" name="diachitamtru">
         </div>
     </div>
+    <label class="float-left">Tên trường lớp 12 : </label>
+
     <h3 class="text-bold">Tên trường THPT lớp 12 </h3>
     <div class="row">
     <div class="col-md-8">
+        <label class="float-left">Trường lớp 12 : </label>
+
         <input class="input-group input-by-me" type="text" placeholder="Trường lớp 12" id="truong12" name="truong12">
     </div>
     <div class="col-md-2">
+        <label class="float-left">Mã trường lớp 12 : </label>
+
         <input class="input-group input-by-me" type="text" placeholder="Mã trường lớp 12" id="matruonglop12" name="matruonglop12">
     </div>
     <div class="col-md-2">
+        <label class="float-left">Mã tỉnh lớp 12 : </label>
+
         <input class="input-group input-by-me" type="text" placeholder="Mã tỉnh lớp 12"  id="matinhlop12" name="matinhlop12">
     </div>
     <div class="col-md-4">
+        <label class="float-left">Hạnh kiểm lớp 12 : </label>
+
                       <select class="input-group input-by-me" name="hanhkiemlop12" >
                             <option value="tot">Tốt</option>
                             <option value="kha">Khá</option>
@@ -204,6 +241,8 @@
                     </select>
         </div>
         <div class="col-md-4">
+            <label class="float-left">Học lực lớp 12 : </label>
+
                       <select class="input-group input-by-me" name="hocluclop12" >
                              <option value="gioi">Giỏi</option>
                             <option value="kha">Khá</option>
@@ -213,6 +252,8 @@
                     </select>
         </div>
         <div class="col-md-4">
+            <label class="float-left">Năm tốt nghiệp : </label>
+            
              <input  class="input-group input-by-me" type="number" name="namtotnghiep" value="2020" min="2010" max="2020" placeholder="Năm tốt nghiệp">
         </div>
         

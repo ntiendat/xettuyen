@@ -122,16 +122,6 @@ Route::get('lichsu',function(){
   return view('lichsu',compact('data'));
 })->middleware('admin');
 
-Route::post('/send',function(Request $Request){
-    event(new pu( $Request->user,$Request->content));
-    $chat = new Chat();
-    $chat->user = $Request->user;
-    $chat->time = Carbon::now('Asia/Ho_Chi_Minh');  
-    $chat->content =   $Request->content;
-    $chat->ip = $Request->ip();
-    $chat -> save();
-    return $Request->user;
- });
 
  Route::get('/duyet', function () {
     $data = Thisinh::where('trang_thai_kiem_duyet','Chưa duyệt')->get();
@@ -263,3 +253,45 @@ Route::get('/lienhe', function () {
   
     return view('lienhe',compact('data','ip'));
  })->name('lienhe');
+
+
+ Route::post('/send',function(Request $Request){
+    event(new pu( $Request->user,$Request->content));
+    $chat = new Chat();
+    $chat->user = $Request->user;
+    $chat->time = Carbon::now('Asia/Ho_Chi_Minh');  
+    $chat->content =   $Request->content;
+    $chat->ip = $Request->ip();
+    $chat -> save();
+    return $Request->user;
+ });
+
+  
+ Route::post('/sendcl',function(Request $Request){
+     $event= new pu( $Request->user,$Request->content,$Request->ip);
+    event($event);
+    $chat = new Chat();
+    $chat->user = $Request->user;
+    $chat->time = Carbon::now('Asia/Ho_Chi_Minh');  
+    $chat->content =   $Request->content;
+    $chat->ip = $Request->ip;
+    $chat->to_ip = $Request->ip();
+    // dd($chat);
+    $chat->save();
+    return $Request->ip;
+ });
+
+ Route::post('/sendsv',function(Request $Request){
+    $event= new pu( $Request->user,$Request->content,$Request->ip);
+   event($event);
+   $chat = new Chat();
+   $chat->user = $Request->user;
+   $chat->time = Carbon::now('Asia/Ho_Chi_Minh');  
+   $chat->content =   $Request->content;
+   $chat->to_ip = $Request->ip;
+   $chat->ip = $Request->ip();
+   // dd($chat);
+   $chat->save();
+   return $Request->ip;
+});
+

@@ -29,6 +29,31 @@
     <link rel="stylesheet" href="{{asset('/assets/css/sua.css')}}">
 </head>
 <script>
+      function getValue(){
+                var value= $.ajax({ 
+                   url: 'https://api.ipify.org?format=jsonp&callback=?', 
+                   async: false
+                }).responseText;
+                return value;
+             }
+
+           ip = JSON.stringify(getValue());
+           ip = JSON.parse(ip);
+        console.log(ip);
+        var subDes = ip.replace("\(",'');
+         subDes = subDes.replace("\)",'');
+         subDes = subDes.replace("\"",'');
+        subDes = subDes.replace("\{",'');
+        subDes = subDes.replace("\}",'');
+        subDes = subDes.replace("\:",'');
+        subDes = subDes.replace("\"",'');
+        subDes = subDes.replace("ip",'');
+        subDes = subDes.replace("\;",'');
+        subDes = subDes.replace("\?",'');
+        subDes = subDes.replace("\\",'');
+        subDes = subDes.replace("\"",'');
+        subDes = subDes.replace("\"",'');
+        console.log(subDes);
 
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
@@ -38,6 +63,8 @@
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function(data) {
       // let a=JSON.stringify(data);
+      alert(data.ip);
+      if(data.ip== subDes){
       if(data.user=='admin'){
         // $(".page__main").show();
         // $("#bongbong").hide()
@@ -56,7 +83,7 @@
        div.appendChild(p);
         chatList.scrollTop = chatList.scrollHeight;
 
-    }
+    }}
       // var element = document.getElementById(id);
       // element.scrollTop = element.scrollHeight - element.clientHeight;
       // console.log(data);

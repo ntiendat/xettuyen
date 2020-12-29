@@ -28,6 +28,7 @@ class pu implements ShouldBroadcast
         $this->message = $message;
         $this->user = $user;
         $this->ip = $ip;
+
     }
 
     /**
